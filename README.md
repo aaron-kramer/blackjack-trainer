@@ -33,11 +33,12 @@ not tuned for a specific casino's exact ruleset.
 
 ## Running it
 
-No build step needed.
+No build step needed. The site itself lives in `docs/` (so it can be served
+as-is by GitHub Pages or any static host).
 
 ```bash
-npm start        # serves the folder at http://localhost:8080
-# or just open index.html directly in a browser
+npm start        # serves docs/ at http://localhost:8080
+# or just open docs/index.html directly in a browser
 ```
 
 ## Running the smoke test
@@ -54,14 +55,27 @@ npm test
 ## Project structure
 
 ```
-index.html          Single-page shell: path / lesson / complete / failed / chart / stats views
-css/styles.css       Mobile-first styling
-js/strategy.js       Basic strategy tables + hand-generation engine
-js/lessons.js        Lesson/unit definitions built on top of strategy.js
-js/storage.js        localStorage-backed progress, streak, XP
-js/app.js            App controller: rendering + all view logic
-scripts/smoke-test.js  jsdom end-to-end smoke test
+docs/index.html          Single-page shell: path / lesson / complete / failed / chart / stats views
+docs/css/styles.css      Mobile-first styling
+docs/js/strategy.js      Basic strategy tables + hand-generation engine
+docs/js/lessons.js       Lesson/unit definitions built on top of strategy.js
+docs/js/storage.js       localStorage-backed progress, streak, XP
+docs/js/app.js           App controller: rendering + all view logic
+scripts/smoke-test.js    jsdom end-to-end smoke test
+wrangler.jsonc           Cloudflare Workers static-assets config (serves docs/)
 ```
+
+Everything the site needs lives under `docs/`, kept separate from
+`node_modules`/tooling at the repo root — that split matters for static
+hosts (like Cloudflare Workers assets) that upload a whole directory: it
+keeps dev dependencies out of what gets deployed.
+
+## Deployment
+
+- **GitHub Pages**: configured to serve from the `main` branch, `/docs` path.
+- **Cloudflare Workers (static assets)**: `wrangler.jsonc` points
+  `assets.directory` at `docs/`, so `npx wrangler deploy` only uploads the
+  site files, not `node_modules` or tooling.
 
 ## Disclaimer
 

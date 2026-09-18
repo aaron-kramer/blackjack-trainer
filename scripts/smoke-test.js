@@ -2,12 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
 
-const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const SITE_DIR = path.join(__dirname, '..', 'docs');
+const html = fs.readFileSync(path.join(SITE_DIR, 'index.html'), 'utf8');
 
 const dom = new JSDOM(html, {
   runScripts: 'dangerously',
-  resources: 'usable',
   url: 'http://localhost/',
+  virtualConsole: new (require('jsdom').VirtualConsole)(), // swallow noisy stub warnings
   beforeParse(win) {
     win.localStorage = (() => {
       let store = {};
@@ -28,7 +29,7 @@ win.addEventListener('error', (e) => errors.push(e.error ? e.error.stack || e.me
 
 const scripts = ['js/strategy.js', 'js/lessons.js', 'js/storage.js', 'js/app.js'];
 for (const rel of scripts) {
-  const code = fs.readFileSync(path.join(__dirname, '..', rel), 'utf8');
+  const code = fs.readFileSync(path.join(SITE_DIR, rel), 'utf8');
   try {
     win.eval(code);
   } catch (e) {
