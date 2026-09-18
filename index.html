@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+  <meta name="theme-color" content="#0b3d2e" />
+  <title>21 Trainer &mdash; Blackjack Basic Strategy</title>
+  <meta name="description" content="Learn perfect blackjack basic strategy through short, Duolingo-style lessons." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%99%A0%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ===== PATH (HOME) VIEW ===== -->
+    <section id="view-path" class="view">
+      <header class="top-bar">
+        <div class="brand">21 <span>Trainer</span></div>
+        <div class="stat-pill" title="Day streak">
+          <span class="stat-icon">🔥</span><span id="stat-streak">0</span>
+        </div>
+        <div class="stat-pill" title="Total XP">
+          <span class="stat-icon">⭐</span><span id="stat-xp">0</span>
+        </div>
+      </header>
+      <main id="path-scroll" class="path-scroll"></main>
+    </section>
+
+    <!-- ===== LESSON INTRO OVERLAY ===== -->
+    <div id="overlay-intro" class="overlay hidden">
+      <div class="sheet">
+        <div class="sheet-icon" id="intro-icon">🃏</div>
+        <h2 id="intro-title">Lesson</h2>
+        <p id="intro-blurb" class="muted"></p>
+        <p id="intro-meta" class="muted small"></p>
+        <button id="intro-start" class="btn btn-primary btn-block">Start</button>
+        <button id="intro-cancel" class="btn btn-ghost btn-block">Cancel</button>
+      </div>
+    </div>
+
+    <!-- ===== LESSON VIEW ===== -->
+    <section id="view-lesson" class="view hidden">
+      <header class="lesson-bar">
+        <button id="lesson-quit" class="icon-btn" aria-label="Quit lesson">✕</button>
+        <div class="progress-track"><div id="lesson-progress-fill" class="progress-fill"></div></div>
+        <div id="lesson-hearts" class="hearts"></div>
+      </header>
+
+      <main class="table">
+        <div class="dealer-row">
+          <div class="row-label">Dealer shows</div>
+          <div id="dealer-cards" class="cards"></div>
+        </div>
+
+        <div class="vs-divider">vs</div>
+
+        <div class="player-row">
+          <div class="row-label">Your hand — <span id="player-total-label"></span></div>
+          <div id="player-cards" class="cards"></div>
+        </div>
+
+        <div id="feedback-banner" class="feedback-banner hidden">
+          <div id="feedback-text"></div>
+        </div>
+      </main>
+
+      <footer id="action-buttons" class="action-buttons"></footer>
+      <button id="lesson-continue" class="btn btn-primary btn-block continue-btn hidden">Continue</button>
+    </section>
+
+    <!-- ===== LESSON COMPLETE VIEW ===== -->
+    <section id="view-complete" class="view hidden">
+      <div class="center-card">
+        <div class="big-emoji">🎉</div>
+        <h1>Lesson Complete!</h1>
+        <div class="result-grid">
+          <div><div class="result-num" id="complete-accuracy">0%</div><div class="result-label">Accuracy</div></div>
+          <div><div class="result-num" id="complete-xp">+0</div><div class="result-label">XP earned</div></div>
+        </div>
+        <button id="complete-continue" class="btn btn-primary btn-block">Continue</button>
+      </div>
+    </section>
+
+    <!-- ===== LESSON FAILED VIEW ===== -->
+    <section id="view-failed" class="view hidden">
+      <div class="center-card">
+        <div class="big-emoji">💔</div>
+        <h1>Out of Hearts</h1>
+        <p class="muted">Take another pass through this lesson — you'll get it.</p>
+        <button id="failed-retry" class="btn btn-primary btn-block">Try Again</button>
+        <button id="failed-home" class="btn btn-ghost btn-block">Back to Path</button>
+      </div>
+    </section>
+
+    <!-- ===== CHART VIEW ===== -->
+    <section id="view-chart" class="view hidden">
+      <header class="top-bar"><div class="brand">Strategy <span>Chart</span></div></header>
+      <main id="chart-scroll" class="chart-scroll"></main>
+    </section>
+
+    <!-- ===== STATS VIEW ===== -->
+    <section id="view-stats" class="view hidden">
+      <header class="top-bar"><div class="brand">Your <span>Stats</span></div></header>
+      <main class="stats-scroll">
+        <div class="stats-card">
+          <div class="stats-row"><span>Day streak</span><strong id="stats-streak">0</strong></div>
+          <div class="stats-row"><span>Total XP</span><strong id="stats-xp">0</strong></div>
+          <div class="stats-row"><span>Lessons completed</span><strong id="stats-lessons">0 / 0</strong></div>
+        </div>
+        <button id="stats-reset" class="btn btn-ghost btn-block">Reset Progress</button>
+      </main>
+    </section>
+
+    <!-- ===== BOTTOM NAV ===== -->
+    <nav id="bottom-nav" class="bottom-nav">
+      <button class="nav-btn active" data-view="path"><span>🎓</span>Learn</button>
+      <button class="nav-btn" data-view="chart"><span>📘</span>Chart</button>
+      <button class="nav-btn" data-view="stats"><span>📊</span>Stats</button>
+    </nav>
+  </div>
+
+  <script src="js/strategy.js"></script>
+  <script src="js/lessons.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
